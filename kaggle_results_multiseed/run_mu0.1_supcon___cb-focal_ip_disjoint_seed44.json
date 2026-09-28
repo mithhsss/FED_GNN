@@ -1,0 +1,51 @@
+{
+  "config": "mu=0.1 (SupCon + CB-Focal)",
+  "split": "ip-disjoint",
+  "seed": 44,
+  "accuracy": 0.5367107853814582,
+  "balanced_accuracy": 0.38384209848479356,
+  "macro_f1": 0.35606139389942676,
+  "per_class": {
+    "Benign": {
+      "recall": 0.9276352621983607,
+      "f1": 0.659941634688297,
+      "support": 139322
+    },
+    "Backdoor": {
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 124
+    },
+    "DDoS": {
+      "recall": 0.15743508282815186,
+      "f1": 0.2575000795342475,
+      "support": 154235
+    },
+    "DoS": {
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 8657
+    },
+    "Injection": {
+      "recall": 0.999664767013074,
+      "f1": 0.6577538141045279,
+      "support": 80541
+    },
+    "Password": {
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 51156
+    },
+    "Scanning": {
+      "recall": 0.29587013310113197,
+      "f1": 0.456635469162467,
+      "support": 16078
+    },
+    "XSS": {
+      "recall": 0.69013154273763,
+      "f1": 0.8166601537058746,
+      "support": 18169
+    }
+  },
+  "elapsed_minutes": 3.4575413862864175
+}

@@ -1,0 +1,61 @@
+{
+  "config": "g_edge_only_mu0.1",
+  "split": "signature-grouped",
+  "seed": 43,
+  "dataset_file": "NF-ToN-IoT.csv",
+  "row_count": 1377837,
+  "split_hash": "sgkf_n5_r42_hash_8tuple",
+  "hyperparameters": {
+    "use_cb_focal": true,
+    "use_edge_interp": true,
+    "mu_supcon": 0.1,
+    "include_raw_in_rf": true,
+    "disable_node_agg": true
+  },
+  "accuracy": 0.9171960122229597,
+  "balanced_accuracy": 0.8207230235707997,
+  "macro_f1": 0.8264736477760014,
+  "per_class": {
+    "Benign": {
+      "recall": 1.0,
+      "f1": 0.8998072231605165,
+      "support": 52744
+    },
+    "Backdoor": {
+      "recall": 0.9927240977881258,
+      "f1": 0.9960578186596584,
+      "support": 3436
+    },
+    "DDoS": {
+      "recall": 0.877260014366279,
+      "f1": 0.9264714190023484,
+      "support": 65431
+    },
+    "DoS": {
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3566
+    },
+    "Injection": {
+      "recall": 0.9182321386591439,
+      "f1": 0.9074396747452347,
+      "support": 93582
+    },
+    "Password": {
+      "recall": 0.9081573896353167,
+      "f1": 0.9518365157331813,
+      "support": 31260
+    },
+    "Scanning": {
+      "recall": 0.8698614047451256,
+      "f1": 0.9304020100502512,
+      "support": 4257
+    },
+    "XSS": {
+      "recall": 0.9995491433724075,
+      "f1": 0.9997745208568207,
+      "support": 19962
+    }
+  },
+  "elapsed_minutes": 2.062494484583537
+}

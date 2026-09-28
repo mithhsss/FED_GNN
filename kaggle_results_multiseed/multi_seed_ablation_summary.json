@@ -1,0 +1,167 @@
+{
+  "files_used": [
+    "run_gnn_anchor_plain_ce_ip_disjoint_seed42.json",
+    "run_gnn_anchor_plain_ce_ip_disjoint_seed43.json",
+    "run_gnn_anchor_plain_ce_ip_disjoint_seed44.json",
+    "run_gnn_anchor_plain_ce_signature_grouped_seed42.json",
+    "run_gnn_anchor_plain_ce_signature_grouped_seed43.json",
+    "run_gnn_anchor_plain_ce_signature_grouped_seed44.json",
+    "run_mu0.0_cb-focal___interp_signature_grouped_seed42.json",
+    "run_mu0.0_cb-focal___interp_signature_grouped_seed43.json",
+    "run_mu0.0_cb-focal___interp_signature_grouped_seed44.json",
+    "run_mu0.1_supcon___cb-focal_ip_disjoint_seed42.json",
+    "run_mu0.1_supcon___cb-focal_ip_disjoint_seed43.json",
+    "run_mu0.1_supcon___cb-focal_ip_disjoint_seed44.json",
+    "run_mu0.1_supcon___cb-focal_signature_grouped_seed42.json",
+    "run_mu0.1_supcon___cb-focal_signature_grouped_seed43.json",
+    "run_mu0.1_supcon___cb-focal_signature_grouped_seed44.json",
+    "run_mu0.3_supcon___cb-focal_signature_grouped_seed42.json",
+    "run_mu0.3_supcon___cb-focal_signature_grouped_seed43.json",
+    "run_mu0.3_supcon___cb-focal_signature_grouped_seed44.json",
+    "run_mu0.5_supcon___cb-focal_signature_grouped_seed42.json",
+    "run_mu0.5_supcon___cb-focal_signature_grouped_seed43.json",
+    "run_mu0.5_supcon___cb-focal_signature_grouped_seed44.json"
+  ],
+  "summary_table": [
+    {
+      "config": "GNN Anchor (Plain CE)",
+      "split": "ip-disjoint",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 23.929808220957455,
+      "balanced_accuracy_std": 0.33223896833403344,
+      "macro_f1_mean": 16.498274530264652,
+      "macro_f1_std": 0.4379740601327164,
+      "backdoor_recall_mean": 0.0,
+      "backdoor_recall_std": 0.0,
+      "scanning_recall_mean": 0.0,
+      "scanning_recall_std": 0.0,
+      "password_recall_mean": 0.0,
+      "password_recall_std": 0.0
+    },
+    {
+      "config": "GNN Anchor (Plain CE)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 78.10608246601232,
+      "balanced_accuracy_std": 2.0118407865370105,
+      "macro_f1_mean": 79.95493770596737,
+      "macro_f1_std": 1.4241970765419816,
+      "backdoor_recall_mean": 0.10671323244082266,
+      "backdoor_recall_std": 0.07638734840911729,
+      "scanning_recall_mean": 80.80025056769243,
+      "scanning_recall_std": 13.522909029711817,
+      "password_recall_mean": 56.07272339518021,
+      "password_recall_std": 5.383602703925219
+    },
+    {
+      "config": "mu=0.0 (CB-Focal + Interp)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 80.6854572598918,
+      "balanced_accuracy_std": 1.640428025711657,
+      "macro_f1_mean": 82.17991200575953,
+      "macro_f1_std": 1.195519622064152,
+      "backdoor_recall_mean": 0.7954986418315871,
+      "backdoor_recall_std": 0.15091530060248395,
+      "scanning_recall_mean": 89.92248062015506,
+      "scanning_recall_std": 9.360769921563376,
+      "password_recall_mean": 68.63297078268288,
+      "password_recall_std": 10.685717861738386
+    },
+    {
+      "config": "mu=0.1 (SupCon + CB-Focal)",
+      "split": "ip-disjoint",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 31.90316081843567,
+      "balanced_accuracy_std": 5.315393878880326,
+      "macro_f1_mean": 27.29070470421596,
+      "macro_f1_std": 7.701507682418035,
+      "backdoor_recall_mean": 2.150537634408602,
+      "backdoor_recall_std": 3.041319488974398,
+      "scanning_recall_mean": 9.862337770037731,
+      "scanning_recall_std": 13.947451831091788,
+      "password_recall_mean": 0.0006516016368233118,
+      "password_recall_std": 0.0009215038720600354
+    },
+    {
+      "config": "mu=0.1 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 94.27778657528056,
+      "balanced_accuracy_std": 1.2024783206131384,
+      "macro_f1_mean": 95.60845960196842,
+      "macro_f1_std": 0.9400139028415075,
+      "backdoor_recall_mean": 99.5731470702367,
+      "backdoor_recall_std": 0.16175137757599348,
+      "scanning_recall_mean": 97.97979797979798,
+      "scanning_recall_std": 2.757334406318234,
+      "password_recall_mean": 66.82448283216037,
+      "password_recall_std": 5.185668790585426
+    },
+    {
+      "config": "mu=0.3 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 90.03691643305793,
+      "balanced_accuracy_std": 6.9540744179615075,
+      "macro_f1_mean": 91.55555324340303,
+      "macro_f1_std": 6.675941066361517,
+      "backdoor_recall_mean": 99.52464105549087,
+      "backdoor_recall_std": 0.2496057495201471,
+      "scanning_recall_mean": 94.89468326677628,
+      "scanning_recall_std": 4.83415730388377,
+      "password_recall_mean": 70.30496907656217,
+      "password_recall_std": 6.608384838740163
+    },
+    {
+      "config": "mu=0.5 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 86.03930889613099,
+      "balanced_accuracy_std": 3.0603863764752606,
+      "macro_f1_mean": 88.75405149514013,
+      "macro_f1_std": 3.527583505938661,
+      "backdoor_recall_mean": 99.07838571982926,
+      "backdoor_recall_std": 0.40210286721115357,
+      "scanning_recall_mean": 91.034374755305,
+      "scanning_recall_std": 12.397380018934157,
+      "password_recall_mean": 57.83002772446151,
+      "password_recall_std": 2.8816915862359007
+    }
+  ]
+}

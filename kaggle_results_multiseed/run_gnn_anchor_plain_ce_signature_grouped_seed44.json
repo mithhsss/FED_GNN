@@ -1,0 +1,51 @@
+{
+  "config": "GNN Anchor (Plain CE)",
+  "split": "signature-grouped",
+  "seed": 44,
+  "accuracy": 0.9117627753994705,
+  "balanced_accuracy": 0.806019376563013,
+  "macro_f1": 0.8156015083796971,
+  "per_class": {
+    "Benign": {
+      "recall": 0.9998293644774761,
+      "f1": 0.9680498572752889,
+      "support": 52744
+    },
+    "Backdoor": {
+      "recall": 0.0,
+      "f1": 0.0,
+      "support": 3436
+    },
+    "DDoS": {
+      "recall": 0.895217863092418,
+      "f1": 0.9447047344101542,
+      "support": 65431
+    },
+    "DoS": {
+      "recall": 0.9977565900168256,
+      "f1": 0.9971973094170403,
+      "support": 3566
+    },
+    "Injection": {
+      "recall": 0.9997649120557373,
+      "f1": 0.9002429578311804,
+      "support": 93582
+    },
+    "Password": {
+      "recall": 0.5565259117082534,
+      "f1": 0.7150872433565572,
+      "support": 31260
+    },
+    "Scanning": {
+      "recall": 0.9990603711533944,
+      "f1": 0.999529964747356,
+      "support": 4257
+    },
+    "XSS": {
+      "recall": 1.0,
+      "f1": 1.0,
+      "support": 19962
+    }
+  },
+  "elapsed_minutes": 2.3289941906929017
+}
