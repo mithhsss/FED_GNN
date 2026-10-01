@@ -313,7 +313,7 @@ All empirical evaluations are conducted strictly on the official NetFlow-v1 repr
 \centering
 \caption{NF-ToN-IoT Ground-Truth Class Distribution and 5-Fold Signature-Grouped Split Support (Seed 42).}
 \label{tab:dataset_distribution}
-\resizebox{0.92\linewidth}{!}{%
+\small
 \begin{tabular}{lrrrr}
 \toprule
 \textbf{Class Name} & \textbf{Raw Flow Count} & \textbf{Proportion (\%)} & \textbf{Train Support (80\%)} & \textbf{Test Support (20\%)} \\
@@ -329,8 +329,7 @@ XSS & $99,944$ & $7.25\%$ & $79,956$ & $19,988$ \\
 \midrule
 \textbf{Total} & $\mathbf{1,377,837}$ & $\mathbf{100.00\%}$ & $\mathbf{1,102,269}$ & $\mathbf{275,568}$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 Table~\ref{tab:dataset_distribution} presents the verified ground-truth class distribution across the 8 official traffic categories: 1 benign class and 7 distinct attack categories. Severe class imbalance is readily apparent: \texttt{Injection} comprises $468,539$ flows, whereas \texttt{Backdoor} contains only $17,247$ total flows ($1.25\%$ of the dataset), establishing an extreme $27:1$ majority-to-minority imbalance during training.
@@ -377,7 +376,7 @@ To reflect authentic decentralized enterprise conditions, the $1,377,837$ NetFlo
 \centering
 \caption{Main Empirical Performance Comparison across Contrastive Regularization Strengths ($\mu$) on NF-ToN-IoT under the 5-Fold Signature-Grouped Zero-Leakage Split (Mean $\pm$ Standard Deviation across 3 Seeds: 42, 43, 44).}
 \label{tab:main_results}
-\resizebox{0.96\linewidth}{!}{%
+\small
 \begin{tabular}{lcccccc}
 \toprule
 \textbf{Model Configuration} & \textbf{Balanced Acc (\%)} & \textbf{Macro FNR (\%)} & \textbf{Macro F1 (\%)} & \textbf{Backdoor Rec (\%)} & \textbf{Scanning Rec (\%)} & \textbf{Password Rec (\%)} \\
@@ -388,8 +387,7 @@ $\mu = 0.0$ (CB-Focal + Interp) & $80.69 \pm 1.64$ & $19.31 \pm 1.64$ & $82.18 \
 $\mu = 0.3$ (SupCon + CB-Focal) & $90.04 \pm 6.95$ & $9.96 \pm 6.95$ & $91.56 \pm 6.68$ & $99.52 \pm 0.25$ & $94.89 \pm 4.83$ & $\mathbf{70.30 \pm 6.61}$ \\
 $\mu = 0.5$ (SupCon + CB-Focal) & $86.04 \pm 3.06$ & $13.96 \pm 3.06$ & $88.75 \pm 3.53$ & $99.08 \pm 0.40$ & $91.03 \pm 12.40$ & $57.83 \pm 2.88$ \\
 \bottomrule
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \subsection{Main Performance Comparison}
@@ -421,7 +419,7 @@ To rigorously disentangle the contribution of relational graph representations f
 \centering
 \caption{Disentangling Representation vs. Meta-Classification: Cumulative 4-Row Ablation on NF-ToN-IoT (3 Seeds: 42, 43, 44).}
 \label{tab:ablation}
-\resizebox{0.96\linewidth}{!}{%
+\small
 \begin{tabular}{lcccc}
 \toprule
 \textbf{Pipeline Configuration} & \textbf{Macro FNR (\%)} & \textbf{Bal Acc (\%)} & \textbf{Backdoor Rec (\%)} & \textbf{Password Rec (\%)} \\
@@ -432,8 +430,7 @@ To rigorously disentangle the contribution of relational graph representations f
 \textbf{4. Proposed FedGNN + RF Meta-Classifier} & $\mathbf{5.72 \pm 1.20}$ & $\mathbf{94.28 \pm 1.20}$ & $\mathbf{99.57 \pm 0.16}$ & $\mathbf{66.82 \pm 5.19}$ \\
 \bottomrule
 \multicolumn{5}{l}{\footnotesize $^*$Exhibits bimodal divergence across seeds (Seed 42: $0.20\%$, Seed 43: $98.86\%$, Seed 44: $0.00\%$).}
-\end{tabular}%
-}
+\end{tabular}
 \end{table}
 
 \textbf{Configuration 1 (Raw Features + RF Alone)}: Disabling graph convolutions and relying entirely on raw tabular features with Random Forest achieves a high Balanced Accuracy of $97.53 \pm 0.46\%$ and Backdoor recall of $99.33 \pm 0.03\%$. Axis-aligned decision trees excel at isolating volumetric anomalies directly from statistical thresholds (e.g., packet rates and byte asymmetries).
