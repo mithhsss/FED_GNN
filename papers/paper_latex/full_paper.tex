@@ -365,6 +365,8 @@ Crucially, we correct an inversion error identified in earlier literature wherei
 \subsection{Hyperparameters and Multi-Seed Environment}
 Federated simulations are configured with $K = 5$ edge clients communicating over $R = 15$ global rounds, executing $E = 5$ local epochs per round. Local GAT hidden dimensions are set to $256$ across $8$ attention heads with dropout $0.20$. Optimizers utilize Adam with learning rate $\eta = 10^{-3}$, weight decay $10^{-4}$, and gradient norm clipping at $2.0$. The Leiden resolution parameter is $\gamma = 1.0$. Focal loss uses $\beta = 0.9999$ and $\gamma = 2.0$. Supervised Contrastive loss is parameterized by temperature $\tau = 0.07$ and balanced batch quota $M = 64$. To ensure absolute scientific reproducibility, all configurations are evaluated across three independent random seeds ($42, 43, 44$) on dedicated NVIDIA Tesla T4 GPU hardware.
 
+To reflect authentic decentralized enterprise conditions, the $1,377,837$ NetFlow records are partitioned across $K = 5$ edge clients following a non-IID label distribution modeled via a Dirichlet distribution $\text{Dir}(\alpha)$ with concentration parameter $\alpha = 0.5$~\cite{hsu2019noniid, zhao2018federated}, combined with source subnet clustering ($\text{L4\_SRC\_IP}$). Under this heterogeneous partitioning, rare attack categories such as \texttt{Backdoor} and \texttt{DoS} are completely absent from certain clients during specific federated communication rounds. When a client encounters a local graph partition with $N_c = 0$ for class $c$, the dynamic class-balanced sampler omits class $c$ from anchor generation, and the contrastive loss $\mathcal{L}_{\text{SupCon}}$ evaluates pairwise attraction strictly across locally present classes ($|P(i)| \ge 1$). Parameter synchronization via \texttt{FedAvg} (Eq.~\ref{eq:fedavg_agg}) propagates the metric separation boundaries established by clients observing minority instances across to minority-deprived clients, preventing representation drift without necessitating cross-client synthetic sample transmission.
+
 % =========================================================================
 % Section VI: Empirical Results and Analysis
 % =========================================================================
@@ -442,6 +444,8 @@ To rigorously disentangle the contribution of relational graph representations f
 
 \textbf{Configuration 4 (Proposed Full Pipeline)}: Fusing contrastively regularized GNN representations ($\mu = 0.1$) with the Random Forest meta-classifier restores stability and minority discrimination, elevating Balanced Accuracy to $\mathbf{94.28 \pm 1.20\%}$ and Backdoor recall to $\mathbf{99.57 \pm 0.16\%}$, while maintaining decentralized federated privacy across edge subnets.
 
+A critical operational trade-off arises when comparing Configuration~1 (Raw Features + RF Alone) against Configuration~4 (Proposed FedGNN + RF). While the centralized tabular baseline achieves an exceptional Balanced Accuracy of $97.53 \pm 0.46\%$, it represents an unconstrained upper bound that requires transmitting all unencrypted NetFlow telemetry to a central clearinghouse. Centralized ingestion directly violates edge data localization constraints, organizational sovereignty mandates, and privacy preservation frameworks such as the GDPR~\cite{mcmahan2017federated, li2020federatedchallenges}. In contrast, our proposed architecture confines raw payload and flow inspection strictly to localized edge gateways, transmitting solely low-dimensional, privacy-preserving community centroids to the aggregation server. Furthermore, while tabular decision trees rely exclusively on static statistical thresholds (such as packet asymmetries and duration bounds) that are vulnerable to adversarial packet-padding and timing evasion~\cite{apruzzese2022sok}, relational GNN convolutions capture topological multi-hop interaction patterns across subnet endpoints, conferring structural resilience against evasive multi-stage intrusion campaigns.
+
 \begin{figure*}[!t]
 \centering
 \includegraphics[width=0.98\textwidth]{fig2_confusion_matrices.pdf}
@@ -474,6 +478,8 @@ Because both Backdoor and Injection attacks utilize application-layer TCP payloa
 
 Supervised Contrastive regularization fundamentally alters this manifold geometry. By evaluating pairwise cosine similarities $\tilde{\boldsymbol{z}}_i \cdot \tilde{\boldsymbol{z}}_a / \tau$ in normalized embedding space, SupCon introduces an active, scale-invariant angular penalty. When paired with our class-balanced batch sampler ($M = 64$ edges per class per step), every optimization step contains equal numbers of positive anchor pairs for Backdoor and Injection. The repulsive gradient term in Eq.~\ref{eq:supcon_gradient} pushes negative pairs apart with magnitude proportional to $- \tilde{\boldsymbol{z}}_a / \tau$. This repulsive force prevents the Injection manifold from absorbing adjacent representations, carving out an isolated, orthogonal subspace for Backdoor embeddings and resolving the $99.83\%$ misclassification crisis.
 
+While contrastive metric regularization achieves a dramatic recovery on \texttt{Backdoor} intrusions ($0.11\% \to 99.57\%$ recall), its impact on administrative \texttt{Password} cracking is comparatively modest ($56.07\% \to 66.82\%$). This disparity highlights the distinct structural mechanisms governing different intrusion vectors. Backdoor flows represent stealthy Command-and-Control (C2) beaconing characterized by low-volume, highly persistent, and topologically isolated communication paths; this topological distinctiveness enables metric repulsion to carve out a clean, orthogonal subspace away from volumetric \texttt{Injection} traffic. Conversely, brute-force \texttt{Password} attempts closely mimic legitimate administrative logins across service ports (e.g., SSH, HTTP basic auth), exhibiting identical RFC 793 flag sequences and packet length distributions~\cite{sarhan2021netflow}. Because their distinguishing signature lies in burst frequency across narrow sliding temporal windows rather than geometric embedding distance, metric regularization alone cannot fully decouple them from benign login clusters, demonstrating why downstream tabular feature thresholding in the meta-classifier remains essential.
+
 \subsection{Sensitivity to Contrastive Weight $\mu$}
 The empirical trajectory across $\mu \in \{0.0, 0.1, 0.3, 0.5\}$ in Table~\ref{tab:main_results} illustrates a fundamental trade-off in contrastive graph regularization. When $\mu = 0.0$, the network lacks the metric repulsion necessary to separate overlapping attack manifolds. Introducing mild contrastive regularization ($\mu = 0.1$) successfully establishes clean decision boundaries between distinct attack categories while preserving the underlying topological clustering discovered by Leiden partitioning.
 
@@ -498,6 +504,7 @@ While our proposed framework demonstrates substantial improvements in false-nega
     \item \textbf{Scope of Zero-Leakage Evaluation}: Our evaluation protocol guarantees zero identical 8-tuple communication signature overlap between training and testing folds, eliminating session memorization artifacts. However, all evaluations were conducted under the signature-grouped protocol on NF-ToN-IoT; cross-topology enterprise generalization across completely unseen network infrastructures was not evaluated.
     \item \textbf{Communication and Compute Overhead}: Deploying three specialized GAT models per edge client triples the local forward-backward pass computation compared to a monolithic GNN. While training remains lightweight on edge accelerators (averaging $\sim 2.0$ minutes per seed), resource-constrained micro-controllers may require model pruning or knowledge distillation before field deployment.
     \item \textbf{Edge-Only Representation Pathway}: During ablation, we additionally evaluated a variant disabling node-feature averaging entirely (edge-only classification), which achieved comparable or higher Balanced Accuracy in isolation under plain cross-entropy. This suggests node-feature averaging may itself contribute to the minority collapse observed in the baseline Anchor. A full interaction study between SupCon regularization and node-aggregation strategy is left to future work.
+    \item \textbf{Streaming Ingestion and Sliding-Window Latency}: In practical deployments, edge sensors ingest continuous packet streams rather than pre-batched static graphs. In our experimental setup, flow graphs are constructed over batch increments of NetFlow collection intervals ($T = 5$ seconds). On resource-constrained edge gateways, buffering flows to assemble the adjacency matrix introduces an inherent detection latency bounded by $T$. Although our per-flow inference latency remains low ($< 0.12$~ms on GPU accelerators), ultra-low-latency Industrial Control System (ICS) deployments requiring sub-millisecond mitigation will require transitioning from discrete sliding-window graph snapshots to continuous temporal dynamic graph convolutional networks~\cite{rossi2020tgn}.
 \end{enumerate}
 
 % =========================================================================
@@ -579,6 +586,18 @@ V.~D. Blondel, J.-L. Guillaume, R.~Lambiotte, and E.~Lefebvre, ``Fast unfolding 
 
 \bibitem{breiman2001randomforests}
 L.~Breiman, ``Random forests,'' \emph{Machine Learning}, vol.~45, no.~1, pp.~5--32, 2001.
+
+\bibitem{hsu2019noniid}
+T.-M.~H. Hsu, H.~Qi, and M.~Brown, ``Measuring the effects of non-identical data distribution for federated visual classification,'' \emph{arXiv preprint arXiv:1909.06335}, 2019.
+
+\bibitem{li2020federatedchallenges}
+T.~Li, A.~K. Sahu, A.~Talwalkar, and V.~Smith, ``Federated learning: Challenges, methods, and future directions,'' \emph{IEEE Signal Processing Magazine}, vol.~37, no.~3, pp.~50--60, 2020.
+
+\bibitem{apruzzese2022sok}
+G.~Apruzzese, P.~Branco, D.~Bajic, \emph{et~al.}, ``SoK: The role of machine learning for network traffic analysis---emerging applications, challenges, and research directions,'' \emph{Computers \& Security}, vol.~120, p.~102796, 2022.
+
+\bibitem{rossi2020tgn}
+E.~Rossi, B.~Chamberlain, F.~Frasca, D.~Eynard, F.~Monti, and M.~Bronstein, ``Temporal graph networks for deep learning on dynamic graphs,'' in \emph{Proc. ICML Workshop on Graph Representation Learning and Beyond (GRL+)}, 2020 (arXiv:2006.10637).
 
 \end{thebibliography}
 
