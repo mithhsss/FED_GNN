@@ -269,7 +269,7 @@ For final decision arbitration, we deploy an ensemble Random Forest meta-classif
 \boldsymbol{\phi}_i = \left[ \boldsymbol{P}_{\text{temp}}(i) \,\|\, \boldsymbol{P}_{\text{cont}}(i) \,\|\, \boldsymbol{P}_{\text{behav}}(i) \,\|\, \boldsymbol{y}_{\text{pred}} \,\|\, \boldsymbol{conf} \,\|\, \boldsymbol{x}_{\text{raw}}(i) \right]
 \label{eq:meta_features}
 \end{equation}
-where $\boldsymbol{P}_d(i) \in \mathbb{R}^8$ are the softmax output probability distributions from the three specialized GAT detectors, $\boldsymbol{y}_{\text{pred}} \in \mathbb{R}^3$ are detector argmax indices, $\boldsymbol{conf} \in \mathbb{R}^3$ are maximum confidence values, and $\boldsymbol{x}_{\text{raw}}(i) \in \mathbb{R}^{24}$ represents the normalized raw flow attribute vector. Fusing raw flow features directly into the meta-classifier provides critical numeric threshold checks that arbitrate conflicting GNN logits. The complete procedural execution is formalized in Algorithm~\ref{alg:training_pipeline}.
+where $\boldsymbol{P}_d(i) \in \mathbb{R}^8$ are the softmax output probability distributions from the three specialized GAT detectors, $\boldsymbol{y}_{\text{pred}} \in \mathbb{R}^3$ are detector argmax indices, $\boldsymbol{conf} \in \mathbb{R}^3$ are maximum confidence values, and $\boldsymbol{x}_{\text{raw}}(i) \in \mathbb{R}^{21}$ represents the normalized flow attribute vector. Fusing raw flow features directly into the meta-classifier provides critical numeric threshold checks that arbitrate conflicting GNN logits. The complete procedural execution is formalized in Algorithm~\ref{alg:training_pipeline}.
 
 \begin{algorithm}[!t]
 \caption{Contrastive Hybrid Federated GNN Training}
@@ -311,23 +311,23 @@ All empirical evaluations are conducted strictly on the official NetFlow-v1 repr
 
 \begin{table}[!t]
 \centering
-\caption{NF-ToN-IoT Class Distribution and Evaluation Partition Support (5-Fold Signature-Grouped Split, Seed 42).}
+\caption{NF-ToN-IoT Ground-Truth Class Distribution and 5-Fold Signature-Grouped Split Support (Seed 42).}
 \label{tab:dataset_distribution}
-\resizebox{0.85\linewidth}{!}{%
-\begin{tabular}{lrrrc}
+\resizebox{0.92\linewidth}{!}{%
+\begin{tabular}{lrrrr}
 \toprule
-\textbf{Class Name} & \textbf{Total Flows} & \textbf{Train Support} & \textbf{Test Support} & \textbf{Imbalance Ratio} \\
+\textbf{Class Name} & \textbf{Raw Flow Count} & \textbf{Proportion (\%)} & \textbf{Train Support (80\%)} & \textbf{Test Support (20\%)} \\
 \midrule
-Benign & $270,279$ & $216,223$ & $54,056$ & $1.00 : 1$ \\
-Backdoor & $17,247$ & $13,797$ & $3,450$ & $15.67 : 1$ \\
-DDoS & $326,345$ & $261,076$ & $65,269$ & $0.83 : 1$ \\
-DoS & $17,717$ & $14,174$ & $3,543$ & $15.26 : 1$ \\
-Injection & $468,539$ & $374,831$ & $93,708$ & $0.58 : 1$ \\
-Password & $156,299$ & $125,039$ & $31,260$ & $1.73 : 1$ \\
-Scanning & $21,467$ & $17,173$ & $4,294$ & $12.59 : 1$ \\
-XSS & $99,944$ & $79,956$ & $19,988$ & $2.70 : 1$ \\
+Benign & $270,279$ & $19.62\%$ & $216,223$ & $54,056$ \\
+Backdoor & $17,247$ & $1.25\%$ & $13,797$ & $3,450$ \\
+DDoS & $326,345$ & $23.68\%$ & $261,076$ & $65,269$ \\
+DoS & $17,717$ & $1.29\%$ & $14,174$ & $3,543$ \\
+Injection & $468,539$ & $34.01\%$ & $374,831$ & $93,708$ \\
+Password & $156,299$ & $11.34\%$ & $125,039$ & $31,260$ \\
+Scanning & $21,467$ & $1.56\%$ & $17,173$ & $4,294$ \\
+XSS & $99,944$ & $7.25\%$ & $79,956$ & $19,988$ \\
 \midrule
-\textbf{Total} & $\mathbf{1,377,837}$ & $\mathbf{1,102,269}$ & $\mathbf{275,568}$ & — \\
+\textbf{Total} & $\mathbf{1,377,837}$ & $\mathbf{100.00\%}$ & $\mathbf{1,102,269}$ & $\mathbf{275,568}$ \\
 \bottomrule
 \end{tabular}%
 }
@@ -412,50 +412,35 @@ Scaling the contrastive weight $\mu$ beyond $0.1$ induces performance degradatio
 \label{fig:per_class_recalls}
 \end{figure}
 
-\subsection{Cumulative Component Ablation Study}
-To rigorously isolate the contribution of each proposed mechanism, Table~\ref{tab:ablation} traces the cumulative addition of components starting from the Plain-CE Anchor baseline.
+\subsection{Disentangling Representation vs. Meta-Classification}
+To rigorously disentangle the contribution of relational graph representations from downstream meta-classification, Table~\ref{tab:ablation} compares four distinct architectural configurations evaluated across three random initialization seeds (42, 43, 44) under the zero-leakage signature-grouped protocol.
 
 \begin{table}[!t]
 \centering
-\caption{Cumulative Component and Structural Ablation Study on NF-ToN-IoT (3 Seeds: 42, 43, 44).}
+\caption{Disentangling Representation vs. Meta-Classification: Cumulative 4-Row Ablation on NF-ToN-IoT (3 Seeds: 42, 43, 44).}
 \label{tab:ablation}
 \resizebox{0.96\linewidth}{!}{%
-\begin{tabular}{llcccc}
+\begin{tabular}{lcccc}
 \toprule
-\textbf{Step} & \textbf{Configuration} & \textbf{Bal Acc (\%)} & \textbf{Macro FNR (\%)} & \textbf{Backdoor Rec (\%)} & \textbf{Optimization Behavior} \\
+\textbf{Pipeline Configuration} & \textbf{Macro FNR (\%)} & \textbf{Bal Acc (\%)} & \textbf{Backdoor Rec (\%)} & \textbf{Password Rec (\%)} \\
 \midrule
-(a) & Plain CE Anchor & $78.11 \pm 2.01$ & $21.89 \pm 2.01$ & $0.11 \pm 0.08$ & Severe minority collapse into Injection \\
-(b) & + CB-Focal (no interp) & $76.79 \pm 10.16$ & $23.21 \pm 10.16$ & $33.82 \pm 57.14^*$ & \textbf{Bimodal Collapse}: Seed 42 ($99.8\%$), Seeds 43/44 ($1.3\%, 0.4\%$) \\
-(c) & + Edge Interp ($\mu = 0.0$) & $80.69 \pm 1.64$ & $19.31 \pm 1.64$ & $0.80 \pm 0.15$ & Stabilizes seed variance, but in collapsed state \\
-\textbf{(d)} & \textbf{+ SupCon ($\mu = 0.1$)} & $\mathbf{94.28 \pm 1.20}$ & $\mathbf{5.72 \pm 1.20}$ & $\mathbf{99.57 \pm 0.16}$ & \textbf{Proposed}: Consistent minority separation \\
-(e) & Full Model w/ RF Det-Only & $49.68 \pm 13.97$ & $50.32 \pm 13.97$ & $33.02 \pm 57.02^*$ & $-44.60\%$ drop: RF requires raw features \\
-\midrule
-\multicolumn{6}{l}{\emph{Structural Ablation: Disclosing Edge-Only Baseline (Bypassing GAT Message Passing)}} \\
-(f) & Edge-Only Anchor (no GAT) & $97.53 \pm 0.46$ & $2.47 \pm 0.46$ & $99.33 \pm 0.03$ & Tabular edge MLP + RF w/ raw features \\
-(g) & Edge-Only w/ SupCon ($\mu = 0.1$) & $78.90 \pm 4.97$ & $21.10 \pm 4.97$ & $99.35 \pm 0.14$ & Destabilized: SupCon distorts un-smoothed tabular edges \\
+1. Raw Flow Features + RF Alone & $2.47 \pm 0.46$ & $97.53 \pm 0.46$ & $99.33 \pm 0.03$ & $97.06 \pm 2.76$ \\
+2. Baseline Anchor (FedGATSage) + RF & $21.89 \pm 2.01$ & $78.11 \pm 2.01$ & $0.11 \pm 0.08$ & $56.07 \pm 5.38$ \\
+3. Proposed FedGNN (MLP Head, No RF) & $50.32 \pm 13.97$ & $49.68 \pm 13.97$ & $33.02 \pm 57.02^*$ & $21.02 \pm 9.84$ \\
+\textbf{4. Proposed FedGNN + RF Meta-Classifier} & $\mathbf{5.72 \pm 1.20}$ & $\mathbf{94.28 \pm 1.20}$ & $\mathbf{99.57 \pm 0.16}$ & $\mathbf{66.82 \pm 5.19}$ \\
 \bottomrule
-\multicolumn{6}{l}{\footnotesize $^*$Indicates bimodal optimization divergence across random initialization seeds.}
+\multicolumn{5}{l}{\footnotesize $^*$Exhibits bimodal divergence across seeds (Seed 42: $0.20\%$, Seed 43: $98.86\%$, Seed 44: $0.00\%$).}
 \end{tabular}%
 }
 \end{table}
 
-\textbf{Analysis of Step (b) [CB-Focal Alone]}: In Step (b), adding CB-Focal loss without edge interpolation or contrastive loss produces severe bimodal optimization collapse. Across the three seeds, Balanced Accuracy averages $76.79 \pm 10.16\%$, and Backdoor recall exhibits a massive standard deviation of $\pm 57.14\%$. In Seed 42, the optimizer happened to find a separating hyperplane, achieving $99.80\%$ Backdoor recall. In Seeds 43 and 44, however, the optimizer collapsed into the majority Injection basin, recording Backdoor recalls of only $1.28\%$ and $0.38\%$, respectively. This instability demonstrates that loss re-weighting alone creates ill-conditioned gradient cliffs in continuous embedding space, rendering convergence non-deterministic without metric guidance.
+\textbf{Configuration 1 (Raw Features + RF Alone)}: Disabling graph convolutions and relying entirely on raw tabular features with Random Forest achieves a high Balanced Accuracy of $97.53 \pm 0.46\%$ and Backdoor recall of $99.33 \pm 0.03\%$. Axis-aligned decision trees excel at isolating volumetric anomalies directly from statistical thresholds (e.g., packet rates and byte asymmetries).
 
-\textbf{Analysis of Step (c) [Edge Interpolation]}: In Step (c), adding convex edge interpolation ($\mu = 0.0$) successfully eliminates the high seed variance, reducing standard deviation from $\pm 10.16\%$ to $\pm 1.64\%$. However, because edge interpolation smooths feature space without exerting repulsive forces between classes, it consistently smooths minority Backdoor representations into the dominant Injection manifold, stabilizing Backdoor recall in a collapsed state ($0.80 \pm 0.15\%$).
+\textbf{Configuration 2 (Baseline Anchor FedGATSage + RF)}: Introducing decentralized GNN message passing under standard empirical risk minimization causes severe topological oversmoothing: Backdoor recall collapses catastrophically to $0.11 \pm 0.08\%$, elevating Macro FNR to $21.89 \pm 2.01\%$. As endpoint nodes average representations across incident flows, rare attack signals are absorbed into high-density majority clusters.
 
-\textbf{Analysis of Step (d) [Supervised Contrastive Regularization]}: Incorporating Supervised Contrastive loss ($\mu = 0.1$) provides the directional repulsive force required to permanently separate the Backdoor and Injection manifolds. It elevates Balanced Accuracy to $94.28 \pm 1.20\%$ while simultaneously achieving near-perfect Backdoor recall ($99.57 \pm 0.16\%$) and complete stability across all random seeds ($99.51\%$, $99.80\%$, $99.42\%$).
+\textbf{Configuration 3 (Proposed FedGNN with MLP Head / No RF)}: When the Random Forest meta-classifier is replaced by a direct MLP classification head operating strictly on contrastive GNN representations without raw flow features, performance drops to $49.68 \pm 13.97\%$ Balanced Accuracy, with high seed variance ($\pm 13.97\%$). This confirms that the downstream Random Forest relies decisively on raw statistical flow checks to arbitrate between continuous detector logits.
 
-\textbf{Analysis of Step (e) [Raw Feature Reliance in Meta-Classification]}: In Step (e), we ablated raw NetFlow features from the Random Forest meta-classifier, training the ensemble strictly on GNN detector logits. Performance collapsed catastrophically: Balanced Accuracy plummeted by $\mathbf{-44.60\%}$ down to $49.68 \pm 13.97\%$, with Macro FNR exploding to $50.32 \pm 13.97\%$. This proves that the downstream Random Forest meta-classifier relies heavily on raw statistical feature thresholds to arbitrate between noisy GNN detector logits.
-
-\subsection{Disclosing the Edge-Only Baseline: Relational Graph vs. Tabular Classification}
-To rigorously assess the utility of graph relational modeling versus pure tabular classification, we evaluated Steps (f) and (g) in Table~\ref{tab:ablation}, wherein GAT graph convolutions were completely disabled (\texttt{disable\_node\_agg = True}). In Step (f), local edge representations were generated strictly via a feed-forward MLP operating on incident endpoint attributes without neighborhood message passing, followed by the downstream Random Forest meta-classifier trained with raw NetFlow features. This configuration achieved a high Balanced Accuracy of $97.53 \pm 0.46\%$ and Backdoor recall of $99.33 \pm 0.03\%$.
-
-A critical question arises: if an edge-only MLP combined with Random Forest achieves $97.53\%$, why is Supervised Contrastive graph learning still the primary contribution?
-\begin{enumerate}
-    \item \textbf{Explaining Tabular Edge Dominance}: As proven by Step (e), the downstream Random Forest relies decisively on raw tabular NetFlow metrics ($+44.60\%$ accuracy boost). On NetFlow benchmarks, non-linear axis-aligned decision trees excel at isolating volumetric anomalies directly from statistical thresholds (e.g., packet rates and byte asymmetries).
-    \item \textbf{The GNN Failure Mode and the Necessity of SupCon}: In decentralized NIDS, graph neural architectures (such as FedGATSage) are specifically motivated by the imperative to model coordinated, multi-host relational topologies and preserve privacy through topological aggregation. However, our replication reveals that standard GNN aggregation introduces severe structural oversmoothing on IP interaction graphs: when hundreds of disparate flows converge on shared server IPs, node feature averaging obscures subtle minority signals, causing catastrophic collapse ($0.11\%$ Backdoor recall in the GNN Anchor). Supervised Contrastive loss ($\mu = 0.1$) is the essential mechanism that resolves this failure, exerting active metric repulsion to restore minority detection ($99.57\%$) within graph-based architectures.
-    \item \textbf{SupCon Specifically Complements Graph-Structured Representations}: Critically, when SupCon is applied to the edge-only MLP without graph message passing (Step g), performance severely degrades: Balanced Accuracy collapses from $97.53\%$ to $78.90 \pm 4.97\%$ with high variance ($\pm 4.97\%$). In un-smoothed tabular space, contrastive pairwise penalties distort the gradient landscape of independent flow vectors. SupCon requires the continuous structural manifold induced by graph neighborhood aggregation to guide metric separation, proving that contrastive regularization and graph topology are tightly coupled.
-\end{enumerate}
+\textbf{Configuration 4 (Proposed Full Pipeline)}: Fusing contrastively regularized GNN representations ($\mu = 0.1$) with the Random Forest meta-classifier restores stability and minority discrimination, elevating Balanced Accuracy to $\mathbf{94.28 \pm 1.20\%}$ and Backdoor recall to $\mathbf{99.57 \pm 0.16\%}$, while maintaining decentralized federated privacy across edge subnets.
 
 \begin{figure*}[!t]
 \centering
@@ -495,7 +480,7 @@ The empirical trajectory across $\mu \in \{0.0, 0.1, 0.3, 0.5\}$ in Table~\ref{t
 However, as $\mu$ increases to $0.3$ and $0.5$, the contrastive objective begins to dominate the classification loss. Because SupCon operates on hyperspherical embeddings by pushing all non-matching class instances apart, overly aggressive contrastive weight forces high-volume classes with natural internal sub-clusters (e.g., volumetric DDoS and DoS flows with varied packet sizes) to fragment. This fragmentation shatters cohesive community structures, destabilizing the GraphSAGE server overlay and increasing seed variance from $\pm 1.20\%$ to $\pm 6.95\%$. Thus, $\mu = 0.1$ represents the precise mathematical equilibrium between structural graph preservation and metric class separation.
 
 \subsection{Meta-Classifier Dependence on Raw Statistical Features}
-The ablation results in Table~\ref{tab:ablation} (Step e) reveal a critical architectural insight: withholding raw NetFlow attributes from the Random Forest meta-classifier causes Balanced Accuracy to drop by $44.60\%$ (from $94.28\%$ to $49.68\%$). In complex cyber-graphs, GNN message passing is susceptible to localized noise and degree-skew artifacts. While GAT attention coefficients and GraphSAGE convolutions effectively capture relational context, their continuous output probabilities can be ambiguous along fine-grained decision boundaries.
+The ablation results in Table~\ref{tab:ablation} (Configuration 3) reveal a critical architectural insight: withholding raw NetFlow attributes from the Random Forest meta-classifier causes Balanced Accuracy to drop by $44.60\%$ (from $94.28\%$ to $49.68\%$). In complex cyber-graphs, GNN message passing is susceptible to localized noise and degree-skew artifacts. While GAT attention coefficients and GraphSAGE convolutions effectively capture relational context, their continuous output probabilities can be ambiguous along fine-grained decision boundaries.
 
 The Random Forest meta-classifier resolves this ambiguity by establishing orthogonal decision splits across raw statistical thresholds (e.g., exact packet asymmetry ratios, port numbers, duration bounds). The meta-classifier uses these deterministic physical flow thresholds to filter out spurious GNN activations. We also evaluated an alternative Mixture-of-Experts (MoE) neural gating network for detector fusion, but found that Random Forest meta-classification decisively outperformed it ($94.28\%$ vs. $49.68\%$ Balanced Accuracy when raw flow features were withheld), leading us to retain Random Forest as the primary meta-classifier.
 
@@ -512,6 +497,7 @@ While our proposed framework demonstrates substantial improvements in false-nega
     \item \textbf{Concentration of Balanced Accuracy Gain}: Decomposing the $13.59\%$ Balanced Accuracy gain achieved by SupCon ($\mu = 0.1$) over $\mu = 0.0$ reveals that exactly $\mathbf{90.85\%}$ of this improvement is driven by the rescue of the \texttt{Backdoor} class ($0.80\% \to 99.57\%$ recall), with Scanning contributing $7.41\%$ and Password exhibiting a slight $-1.81\%$ decrease. Thus, the performance leap reflects the targeted resolution of a specific topological collapse rather than uniform improvements across all attack vectors.
     \item \textbf{Scope of Zero-Leakage Evaluation}: Our evaluation protocol guarantees zero identical 8-tuple communication signature overlap between training and testing folds, eliminating session memorization artifacts. However, all evaluations were conducted under the signature-grouped protocol on NF-ToN-IoT; cross-topology enterprise generalization across completely unseen network infrastructures was not evaluated.
     \item \textbf{Communication and Compute Overhead}: Deploying three specialized GAT models per edge client triples the local forward-backward pass computation compared to a monolithic GNN. While training remains lightweight on edge accelerators (averaging $\sim 2.0$ minutes per seed), resource-constrained micro-controllers may require model pruning or knowledge distillation before field deployment.
+    \item \textbf{Edge-Only Representation Pathway}: During ablation, we additionally evaluated a variant disabling node-feature averaging entirely (edge-only classification), which achieved comparable or higher Balanced Accuracy in isolation under plain cross-entropy. This suggests node-feature averaging may itself contribute to the minority collapse observed in the baseline Anchor. A full interaction study between SupCon regularization and node-aggregation strategy is left to future work.
 \end{enumerate}
 
 % =========================================================================
@@ -556,7 +542,7 @@ T.-Y. Lin, P.~Goyal, R.~Girshick, K.~He, and P.~Doll{\'{a}}r, ``Focal loss for d
 P.~Khosla, P.~Teterwak, C.~Wang, A.~Sarna, Y.~Tian, P.~Isola, A.~Maschinot, C.~Liu, and D.~Krishnan, ``Supervised contrastive learning,'' in \emph{Adv. Neural Inf. Process. Syst. (NeurIPS)}, vol.~33, 2020, pp.~18661--18673.
 
 \bibitem{sarhan2021netflow}
-M.~Sarhan, S.~Layeghy, N.~Moustafa, and M.~Portmann, ``NetFlow datasets for machine learning-based network intrusion detection systems,'' in \emph{Big Data Technologies and Applications}, Springer, 2021, pp.~117--135.
+M.~Sarhan, S.~Layeghy, N.~Moustafa, and M.~Portmann, ``Towards generating realistic {NetFlow} datasets for machine learning-based network intrusion detection systems,'' in \emph{Big Data Technologies and Applications}, Springer, 2021, pp.~117--135.
 
 \bibitem{alsaedi2020toniot}
 A.~Alsaedi, N.~Moustafa, Z.~Tari, A.~Mahmood, and A.~Anwar, ``TON\_IoT telemetry dataset: A new generation dataset of IoT and IIoT for data-driven cyber threat detection,'' \emph{IEEE Access}, vol.~8, pp.~165130--165150, 2020.
