@@ -1,0 +1,215 @@
+{
+  "config": "mu=0.1 (SupCon + CB-Focal)",
+  "split": "signature-grouped",
+  "seed": 42,
+  "balanced_accuracy": 0.5239016002167286,
+  "accuracy": 0.983781450419339,
+  "macro_f1": 0.5898970892288431,
+  "macro_fnr": 0.4760983997832714,
+  "macro_recall": 0.5239016002167286,
+  "per_class": {
+    "Benign": {
+      "precision": 0.9833244464757261,
+      "recall": 1.0,
+      "f1-score": 0.9915921202131576,
+      "train_support": 1240894,
+      "test_support": 309818,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Analysis": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1-score": 0.0,
+      "train_support": 1596,
+      "test_support": 399,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Backdoor": {
+      "precision": 1.0,
+      "recall": 0.0028328611898017,
+      "f1-score": 0.005649717514124294,
+      "train_support": 1429,
+      "test_support": 353,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "DoS": {
+      "precision": 1.0,
+      "recall": 0.04265873015873016,
+      "f1-score": 0.0818268315889629,
+      "train_support": 4043,
+      "test_support": 1008,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Exploits": {
+      "precision": 0.99848828420257,
+      "recall": 0.7972238986119493,
+      "f1-score": 0.8865771812080537,
+      "train_support": 19765,
+      "test_support": 4971,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Fuzzers": {
+      "precision": 1.0,
+      "recall": 0.6437017994858611,
+      "f1-score": 0.7832342821395057,
+      "train_support": 15573,
+      "test_support": 3890,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Generic": {
+      "precision": 1.0,
+      "recall": 0.3140495867768595,
+      "f1-score": 0.4779874213836478,
+      "train_support": 4481,
+      "test_support": 1089,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Reconnaissance": {
+      "precision": 1.0,
+      "recall": 0.8483393357342938,
+      "f1-score": 0.917947607707296,
+      "train_support": 9792,
+      "test_support": 2499,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Shellcode": {
+      "precision": 1.0,
+      "recall": 0.9538461538461539,
+      "f1-score": 0.9763779527559056,
+      "train_support": 1105,
+      "test_support": 260,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Worms": {
+      "precision": 1.0,
+      "recall": 0.6363636363636364,
+      "f1-score": 0.7777777777777778,
+      "train_support": 120,
+      "test_support": 33,
+      "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+    }
+  },
+  "confusion_matrix": [
+    [
+      309818,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      399,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      352,
+      0,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      965,
+      0,
+      0,
+      43,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1008,
+      0,
+      0,
+      0,
+      3963,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      1381,
+      0,
+      0,
+      0,
+      5,
+      2504,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      746,
+      0,
+      0,
+      0,
+      1,
+      0,
+      342,
+      0,
+      0,
+      0
+    ],
+    [
+      379,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2120,
+      0,
+      0
+    ],
+    [
+      12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      248,
+      0
+    ],
+    [
+      12,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      21
+    ]
+  ],
+  "elapsed_sec": 178.05360746383667
+}

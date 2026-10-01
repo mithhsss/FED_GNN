@@ -1,0 +1,245 @@
+{
+  "config": "GNN Anchor (Plain CE)",
+  "split": "signature-grouped",
+  "seed": 45,
+  "balanced_accuracy": 0.942655067371501,
+  "balanced_accuracy_gnn_alone": 0.1994805335470173,
+  "accuracy": 0.9987049827331032,
+  "macro_f1": 0.9636197463524304,
+  "macro_fnr": 0.057344932628499046,
+  "macro_recall": 0.942655067371501,
+  "loss_history": [
+    2.181063477198283,
+    2.2869065539042155,
+    2.2229338391621907,
+    2.058714714050293,
+    2.0020448621114095,
+    2.0040678469340008,
+    2.0052874930699667,
+    1.9997561009724936,
+    1.9971346696217855,
+    1.9982655000686647,
+    1.9994493373235067,
+    1.9966063340504965,
+    1.9957002337773642,
+    1.9925763638814291,
+    1.993983866373698
+  ],
+  "collapse_detected": false,
+  "collapse_diagnosis": "NO COLLAPSE: Healthy decision boundary (Analysis Rec: 77.9%, Backdoor Rec: 88.4%)",
+  "per_class": {
+    "Benign": {
+      "precision": 0.9995096062331629,
+      "recall": 0.9999515844786294,
+      "f1-score": 0.9997305465065435,
+      "gnn_recall": 0.9741428838866689,
+      "train_support": 1240894,
+      "test_support": 309818,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Analysis": {
+      "precision": 1.0,
+      "recall": 0.7794486215538847,
+      "f1-score": 0.8760563380281691,
+      "gnn_recall": 0.2606516290726817,
+      "train_support": 1596,
+      "test_support": 399,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Backdoor": {
+      "precision": 0.9904761904761905,
+      "recall": 0.8838526912181303,
+      "f1-score": 0.9341317365269461,
+      "gnn_recall": 0.0,
+      "train_support": 1429,
+      "test_support": 353,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "DoS": {
+      "precision": 0.9902794653705954,
+      "recall": 0.808531746031746,
+      "f1-score": 0.8902239213544512,
+      "gnn_recall": 0.03273809523809524,
+      "train_support": 4043,
+      "test_support": 1008,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Exploits": {
+      "precision": 0.9546241107479331,
+      "recall": 0.9987929993964997,
+      "f1-score": 0.9762092017302398,
+      "gnn_recall": 0.0,
+      "train_support": 19765,
+      "test_support": 4971,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Fuzzers": {
+      "precision": 0.9984447900466563,
+      "recall": 0.9902313624678664,
+      "f1-score": 0.9943211151264842,
+      "gnn_recall": 0.0,
+      "train_support": 15573,
+      "test_support": 3890,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Generic": {
+      "precision": 0.9981042654028436,
+      "recall": 0.9669421487603306,
+      "f1-score": 0.9822761194029851,
+      "gnn_recall": 0.0,
+      "train_support": 4481,
+      "test_support": 1089,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Reconnaissance": {
+      "precision": 0.998000799680128,
+      "recall": 0.9987995198079231,
+      "f1-score": 0.9984,
+      "gnn_recall": 0.0,
+      "train_support": 9792,
+      "test_support": 2499,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Shellcode": {
+      "precision": 0.9701492537313433,
+      "recall": 1.0,
+      "f1-score": 0.9848484848484849,
+      "gnn_recall": 0.0,
+      "train_support": 1105,
+      "test_support": 260,
+      "reliability_status": "RELIABLE (>=100)"
+    },
+    "Worms": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1-score": 1.0,
+      "gnn_recall": 0.7272727272727273,
+      "train_support": 120,
+      "test_support": 33,
+      "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+    }
+  },
+  "confusion_matrix": [
+    [
+      309803,
+      0,
+      2,
+      0,
+      13,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      87,
+      311,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      17,
+      0,
+      312,
+      8,
+      16,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      46,
+      0,
+      0,
+      815,
+      145,
+      1,
+      1,
+      0,
+      0,
+      0
+    ],
+    [
+      2,
+      0,
+      0,
+      0,
+      4965,
+      2,
+      0,
+      1,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      38,
+      3852,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      22,
+      3,
+      1053,
+      4,
+      7,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      2,
+      0,
+      1,
+      2496,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      260,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      33
+    ]
+  ],
+  "elapsed_sec": 127.91183543205261
+}

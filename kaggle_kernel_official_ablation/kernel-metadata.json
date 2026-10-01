@@ -1,7 +1,7 @@
 {
   "id": "mythhhhh182678342/fedgatsage-ids-gpu",
   "title": "FedGATSage IDS GPU",
-  "code_file": "run_missing_ablations_kaggle.py",
+  "code_file": "run_unsw_nb15_experiments_kaggle.py",
   "language": "python",
   "kernel_type": "script",
   "is_private": "true",
@@ -9,7 +9,7 @@
   "enable_tpu": "false",
   "enable_internet": "true",
   "dataset_sources": [
-    "mythhhhh182678342/official-nf-ton-iot"
+    "mythhhhh182678342/official-nf-unsw-nb15"
   ],
   "competition_sources": [],
   "kernel_sources": [],

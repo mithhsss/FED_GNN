@@ -1,0 +1,158 @@
+digraph G {
+    graph [rankdir=TB, bgcolor="white", fontname="Helvetica", fontsize=11, compound=true, nodesep=0.32, ranksep=0.42, pad="0.2"];
+    node [fontname="Helvetica", fontsize=9.5, shape=box, style="filled,rounded", penwidth=1.4, margin="0.14,0.09"];
+    edge [fontname="Helvetica", fontsize=8.5, color="#1f4e79", penwidth=1.2, fontcolor="#0b2238"];
+
+    // =========================================================================
+    // STAGE 1: INGESTION & ZERO-LEAKAGE SPLIT
+    // =========================================================================
+    subgraph cluster_0 {
+        label = "Stage 1: Ingestion & Zero-Leakage Split Control";
+        color = "#0d6efd";
+        style = "dashed,rounded";
+        bgcolor = "#f8faff";
+        fontcolor = "#084298";
+        fontsize = 11;
+
+        flows [label="NF-ToN-IoT NetFlow Stream\n(1,377,837 NetFlows, 24 Base Attributes)", fillcolor="#e7f1ff", color="#0d6efd", shape=ellipse, style="filled,bold"];
+        sig_split [label="8-Tuple Signature Grouping (StratifiedGroupKFold)\n[0.00% Flow/Socket Evaluation Leakage Across 5 Folds]", fillcolor="#cfe2ff", color="#0d6efd"];
+        
+        flows -> sig_split;
+    }
+
+    // =========================================================================
+    // STAGE 2: MULTI-TOPOLOGY GRAPH DECOMPOSITION
+    // =========================================================================
+    subgraph cluster_1 {
+        label = "Stage 2: Multi-Topology Graph Construction & Feature Routing";
+        color = "#198754";
+        style = "dashed,rounded";
+        bgcolor = "#f4faf6";
+        fontcolor = "#0f5132";
+        fontsize = 11;
+
+        { rank=same; feat_temp; feat_cont; feat_behav; }
+
+        feat_temp [label="Temporal View\n(Dur, Pkt/Byte Rates, Asym)", fillcolor="#d1e7dd", color="#198754"];
+        feat_cont [label="Content View\n(Byte Vol, TCP Flags)", fillcolor="#d1e7dd", color="#198754"];
+        feat_behav [label="Behavioral View\n(Priv Ports, Ephem Spread)", fillcolor="#d1e7dd", color="#198754"];
+    }
+
+    // =========================================================================
+    // STAGE 3: FEDERATED EDGE CLIENT PROCESSING
+    // =========================================================================
+    subgraph cluster_2 {
+        label = "Stage 3: Federated Edge Client Learning (K = 5 Clients)";
+        color = "#b02a37";
+        style = "solid,rounded";
+        bgcolor = "#fffbfc";
+        fontcolor = "#842029";
+        fontsize = 11.5;
+
+        subgraph cluster_gat {
+            label = "Domain-Specialized GAT Subgraphs (2-Layer, 8-Head Attention)";
+            color = "#dc3545";
+            style = "dotted,rounded";
+            bgcolor = "#ffffff";
+            fontcolor = "#842029";
+            fontsize = 9.5;
+
+            { rank=same; gat_temp; gat_cont; gat_behav; }
+
+            gat_temp [label="Temporal GAT\n(h_v^(1) in R^256)", fillcolor="#f8d7da", color="#dc3545"];
+            gat_cont [label="Content GAT\n(h_v^(2) in R^256)", fillcolor="#f8d7da", color="#dc3545"];
+            gat_behav [label="Behavioral GAT\n(h_v^(3) in R^256)", fillcolor="#f8d7da", color="#dc3545"];
+        }
+
+        subgraph cluster_partition {
+            label = "Topological Abstraction & Community Pooling";
+            color = "#ffc107";
+            style = "dashed,rounded";
+            bgcolor = "#fffdf5";
+            fontcolor = "#664d03";
+            fontsize = 9.5;
+
+            { rank=same; leiden; pool; }
+            leiden [label="Leiden CPM Partitioning\n(Refinement Guarantee,\nWell-Connected Communities)", fillcolor="#fff3cd", color="#ffc107"];
+            pool [label="Centroid Uniform Pooling\n(c_p in R^{d_h})", fillcolor="#fff3cd", color="#ffc107"];
+            
+            leiden -> pool;
+        }
+
+        loss_engine [label="Joint Regularization Engine:\nL_total = L_CB-Focal + mu * L_SupCon (mu = 0.1, tau = 0.07)\n+ Class-Balanced Batch Sampler (M = 64) + Intra-Class Edge Mixup (Beta = 0.5)", fillcolor="#ffe5d0", color="#fd7e14", shape=note, fontsize=9];
+    }
+
+    // =========================================================================
+    // STAGE 4: SERVER COORDINATION & MACRO OVERLAY
+    // =========================================================================
+    subgraph cluster_3 {
+        label = "Stage 4: Server Macro-Topology & FedAvg Synchronization";
+        color = "#6f42c1";
+        style = "dashed,rounded";
+        bgcolor = "#faf8fd";
+        fontcolor = "#432874";
+        fontsize = 11;
+
+        { rank=same; fedavg; server_sage; }
+
+        fedavg [label="Edge-Count Weighted FedAvg\n(Global Model Weight Sync)", fillcolor="#e2d9f3", color="#6f42c1"];
+        server_sage [label="GraphSAGE Server Overlay\n(Top-5 Cosine Graph over Centroids)", fillcolor="#d0c2ee", color="#6f42c1"];
+    }
+
+    // =========================================================================
+    // STAGE 5: ENSEMBLE DECISION ARBITRATION
+    // =========================================================================
+    subgraph cluster_4 {
+        label = "Stage 5: Ensemble Decision Arbitration & Detection";
+        color = "#055160";
+        style = "solid,rounded";
+        bgcolor = "#f0f9fb";
+        fontcolor = "#055160";
+        fontsize = 11;
+
+        meta_concat [label="Meta-Feature Vector Fusion\n[3x GAT Probabilities || Argmax Predictions || Server Macro-Embeddings || 24 Raw NetFlow Attributes]", fillcolor="#cff4fc", color="#0dcaf0"];
+        rf_meta [label="Random Forest Meta-Classifier\n(100 Balanced Estimators, Max-Depth 20)", fillcolor="#9eeaf9", color="#055160", shape=box3d];
+        pred_out [label="Final 8-Class Intrusion Detection Output\n[Benign, Backdoor (99.57%), DDoS, DoS, Injection, Password, Scanning, XSS]", fillcolor="#198754", color="#0f5132", fontcolor="#ffffff", style="filled,bold", fontsize=10.5];
+
+        meta_concat -> rf_meta -> pred_out;
+    }
+
+    // =========================================================================
+    // STRICT VERTICAL PIPELINE EDGES
+    // =========================================================================
+    // Stage 1 to 2
+    sig_split -> feat_temp;
+    sig_split -> feat_cont;
+    sig_split -> feat_behav;
+
+    // Stage 2 to 3
+    feat_temp -> gat_temp;
+    feat_cont -> gat_cont;
+    feat_behav -> gat_behav;
+
+    // GATs to Leiden
+    gat_temp -> leiden [color="#d63384"];
+    gat_cont -> leiden [color="#d63384"];
+    gat_behav -> leiden [color="#d63384"];
+
+    // Loss Engine Gradients
+    loss_engine -> gat_temp [style=dotted, color="#fd7e14", label="Grads", constraint=false];
+    loss_engine -> gat_cont [style=dotted, color="#fd7e14", constraint=false];
+    loss_engine -> gat_behav [style=dotted, color="#fd7e14", constraint=false];
+
+    // Stage 3 to 4
+    gat_temp -> fedavg [style=dashed, dir=both, color="#6f42c1", label="FedAvg Sync"];
+    gat_cont -> fedavg [style=dashed, dir=both, color="#6f42c1"];
+    gat_behav -> fedavg [style=dashed, dir=both, color="#6f42c1"];
+
+    pool -> server_sage [label="Community Centroids", color="#6f42c1"];
+
+    // Stage 3 & 4 to Stage 5
+    gat_temp -> meta_concat [label="Logits & Probs", color="#0dcaf0"];
+    gat_cont -> meta_concat [color="#0dcaf0"];
+    gat_behav -> meta_concat [color="#0dcaf0"];
+    server_sage -> meta_concat [label="Macro Context", color="#6f42c1"];
+
+    // Direct Statistical Skip Connection (Bypasses to Meta-Classifier)
+    sig_split -> meta_concat [label="Statistical Skip Connection (Raw 24 Attributes)\n[+44.60% Balanced Accuracy Recovery]", style=bold, color="#b02a37", penwidth=2.0, constraint=false];
+}

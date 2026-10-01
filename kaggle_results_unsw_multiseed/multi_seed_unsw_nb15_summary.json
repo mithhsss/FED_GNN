@@ -1,0 +1,461 @@
+{
+  "files_used": [
+    "run_GNN_Anchor_Plain_CE_seed42.json",
+    "run_GNN_Anchor_Plain_CE_seed43.json",
+    "run_GNN_Anchor_Plain_CE_seed44.json",
+    "run_mu0.0_CB-Focal___Interp_seed42.json",
+    "run_mu0.0_CB-Focal___Interp_seed43.json",
+    "run_mu0.0_CB-Focal___Interp_seed44.json",
+    "run_mu0.1_SupCon___CB-Focal_seed42.json",
+    "run_mu0.1_SupCon___CB-Focal_seed43.json",
+    "run_mu0.1_SupCon___CB-Focal_seed44.json",
+    "run_mu0.3_SupCon___CB-Focal_seed42.json",
+    "run_mu0.3_SupCon___CB-Focal_seed43.json",
+    "run_mu0.3_SupCon___CB-Focal_seed44.json",
+    "run_mu0.5_SupCon___CB-Focal_seed42.json",
+    "run_mu0.5_SupCon___CB-Focal_seed43.json",
+    "run_mu0.5_SupCon___CB-Focal_seed44.json"
+  ],
+  "summary_table": [
+    {
+      "config": "GNN Anchor (Plain CE)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 78.11955117780919,
+      "balanced_accuracy_std": 6.137189209927858,
+      "macro_f1_mean": 82.61500393694244,
+      "macro_f1_std": 5.50584411826262,
+      "macro_fnr_mean": 21.880448822190814,
+      "macro_fnr_std": 6.137189209927859,
+      "per_class_summary": {
+        "Benign": {
+          "recall_mean": 99.99655711848031,
+          "recall_std": 0.002448707881558575,
+          "train_support": 1240894,
+          "test_support": 309818,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Analysis": {
+          "recall_mean": 11.779448621553883,
+          "recall_std": 14.183485667304398,
+          "train_support": 1596,
+          "test_support": 399,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Backdoor": {
+          "recall_mean": 50.89707271010386,
+          "recall_std": 29.63045813557501,
+          "train_support": 1429,
+          "test_support": 353,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "DoS": {
+          "recall_mean": 63.425925925925924,
+          "recall_std": 13.798918087792462,
+          "train_support": 4043,
+          "test_support": 1008,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Exploits": {
+          "recall_mean": 94.79648628713204,
+          "recall_std": 2.4911309281084932,
+          "train_support": 19765,
+          "test_support": 4971,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Fuzzers": {
+          "recall_mean": 94.62724935732648,
+          "recall_std": 2.3953020679272297,
+          "train_support": 15573,
+          "test_support": 3890,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Generic": {
+          "recall_mean": 80.62442607897152,
+          "recall_std": 9.258032283423706,
+          "train_support": 4481,
+          "test_support": 1089,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Reconnaissance": {
+          "recall_mean": 92.50366813392024,
+          "recall_std": 3.647436971918695,
+          "train_support": 9792,
+          "test_support": 2499,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Shellcode": {
+          "recall_mean": 99.6153846153846,
+          "recall_std": 1.4210854715202004e-14,
+          "train_support": 1105,
+          "test_support": 260,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Worms": {
+          "recall_mean": 92.92929292929291,
+          "recall_std": 6.226680811079776,
+          "train_support": 120,
+          "test_support": 33,
+          "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+        }
+      }
+    },
+    {
+      "config": "mu=0.0 (CB-Focal + Interp)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 85.003849766433,
+      "balanced_accuracy_std": 14.200423557229445,
+      "macro_f1_mean": 88.79956458887968,
+      "macro_f1_std": 11.561266854610167,
+      "macro_fnr_mean": 14.996150233566995,
+      "macro_fnr_std": 14.200423557229442,
+      "per_class_summary": {
+        "Benign": {
+          "recall_mean": 99.99817096919266,
+          "recall_std": 0.0017547405713766394,
+          "train_support": 1240894,
+          "test_support": 309818,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Analysis": {
+          "recall_mean": 56.39097744360902,
+          "recall_std": 40.000397817968455,
+          "train_support": 1596,
+          "test_support": 399,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Backdoor": {
+          "recall_mean": 67.6109537299339,
+          "recall_std": 30.595192295094677,
+          "train_support": 1429,
+          "test_support": 353,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "DoS": {
+          "recall_mean": 66.3690476190476,
+          "recall_std": 24.49425990658926,
+          "train_support": 4043,
+          "test_support": 1008,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Exploits": {
+          "recall_mean": 95.996781331724,
+          "recall_std": 5.192311320837522,
+          "train_support": 19765,
+          "test_support": 4971,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Fuzzers": {
+          "recall_mean": 92.87917737789205,
+          "recall_std": 8.38096212915235,
+          "train_support": 15573,
+          "test_support": 3890,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Generic": {
+          "recall_mean": 83.74655647382922,
+          "recall_std": 18.182281950471904,
+          "train_support": 4481,
+          "test_support": 1089,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Reconnaissance": {
+          "recall_mean": 96.0250766973456,
+          "recall_std": 5.281944424917649,
+          "train_support": 9792,
+          "test_support": 2499,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Shellcode": {
+          "recall_mean": 99.10256410256409,
+          "recall_std": 0.725237724293899,
+          "train_support": 1105,
+          "test_support": 260,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Worms": {
+          "recall_mean": 91.91919191919192,
+          "recall_std": 9.367291409591623,
+          "train_support": 120,
+          "test_support": 33,
+          "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+        }
+      }
+    },
+    {
+      "config": "mu=0.1 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 80.78670621967439,
+      "balanced_accuracy_std": 20.083287961349072,
+      "macro_f1_mean": 84.28083103148505,
+      "macro_f1_std": 17.886394724754783,
+      "macro_fnr_mean": 19.213293780325607,
+      "macro_fnr_std": 20.083287961349072,
+      "per_class_summary": {
+        "Benign": {
+          "recall_mean": 99.99913927962007,
+          "recall_std": 0.0012172424346986322,
+          "train_support": 1240894,
+          "test_support": 309818,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Analysis": {
+          "recall_mean": 54.469507101086045,
+          "recall_std": 38.622160161682416,
+          "train_support": 1596,
+          "test_support": 399,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Backdoor": {
+          "recall_mean": 59.301227573182246,
+          "recall_std": 41.75137246152295,
+          "train_support": 1429,
+          "test_support": 353,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "DoS": {
+          "recall_mean": 58.2010582010582,
+          "recall_std": 38.16736425185188,
+          "train_support": 4043,
+          "test_support": 1008,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Exploits": {
+          "recall_mean": 92.92563535170656,
+          "recall_std": 9.336136929286205,
+          "train_support": 19765,
+          "test_support": 4971,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Fuzzers": {
+          "recall_mean": 87.24935732647816,
+          "recall_std": 16.181506829297756,
+          "train_support": 15573,
+          "test_support": 3890,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Generic": {
+          "recall_mean": 74.83930211202939,
+          "recall_std": 30.716585154935366,
+          "train_support": 4481,
+          "test_support": 1089,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Reconnaissance": {
+          "recall_mean": 94.79791916766708,
+          "recall_std": 7.045620720789344,
+          "train_support": 9792,
+          "test_support": 2499,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Shellcode": {
+          "recall_mean": 98.20512820512822,
+          "recall_std": 1.994403741808209,
+          "train_support": 1105,
+          "test_support": 260,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Worms": {
+          "recall_mean": 87.87878787878788,
+          "recall_std": 17.141982574219334,
+          "train_support": 120,
+          "test_support": 33,
+          "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+        }
+      }
+    },
+    {
+      "config": "mu=0.3 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 45.91283355061649,
+      "balanced_accuracy_std": 25.362605480956294,
+      "macro_f1_mean": 50.70313594637279,
+      "macro_f1_std": 27.414436493289355,
+      "macro_fnr_mean": 54.08716644938351,
+      "macro_fnr_std": 25.3626054809563,
+      "per_class_summary": {
+        "Benign": {
+          "recall_mean": 100.0,
+          "recall_std": 0.0,
+          "train_support": 1240894,
+          "test_support": 309818,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Analysis": {
+          "recall_mean": 0.0,
+          "recall_std": 0.0,
+          "train_support": 1596,
+          "test_support": 399,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Backdoor": {
+          "recall_mean": 18.413597733711047,
+          "recall_std": 26.040759647096653,
+          "train_support": 1429,
+          "test_support": 353,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "DoS": {
+          "recall_mean": 17.724867724867725,
+          "recall_std": 21.32857038837848,
+          "train_support": 4043,
+          "test_support": 1008,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Exploits": {
+          "recall_mean": 59.632535371823245,
+          "recall_std": 40.12956617146376,
+          "train_support": 19765,
+          "test_support": 4971,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Fuzzers": {
+          "recall_mean": 48.43187660668381,
+          "recall_std": 32.18851875261705,
+          "train_support": 15573,
+          "test_support": 3890,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Generic": {
+          "recall_mean": 42.57728803183348,
+          "recall_std": 34.34264318946954,
+          "train_support": 4481,
+          "test_support": 1089,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Reconnaissance": {
+          "recall_mean": 61.878084567160194,
+          "recall_std": 41.86730433206555,
+          "train_support": 9792,
+          "test_support": 2499,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Shellcode": {
+          "recall_mean": 66.02564102564102,
+          "recall_std": 43.970060341590724,
+          "train_support": 1105,
+          "test_support": 260,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Worms": {
+          "recall_mean": 44.444444444444436,
+          "recall_std": 32.94849783899008,
+          "train_support": 120,
+          "test_support": 33,
+          "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+        }
+      }
+    },
+    {
+      "config": "mu=0.5 (SupCon + CB-Focal)",
+      "split": "signature-grouped",
+      "num_seeds": 3,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "balanced_accuracy_mean": 33.66742291202326,
+      "balanced_accuracy_std": 22.3763530560694,
+      "macro_f1_mean": 41.067195047228765,
+      "macro_f1_std": 26.885568784834327,
+      "macro_fnr_mean": 66.33257708797673,
+      "macro_fnr_std": 22.3763530560694,
+      "per_class_summary": {
+        "Benign": {
+          "recall_mean": 99.99989240995251,
+          "recall_std": 0.0001521553043390038,
+          "train_support": 1240894,
+          "test_support": 309818,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Analysis": {
+          "recall_mean": 13.868003341687553,
+          "recall_std": 11.569311294049651,
+          "train_support": 1596,
+          "test_support": 399,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Backdoor": {
+          "recall_mean": 12.653446647780925,
+          "recall_std": 17.495577832700228,
+          "train_support": 1429,
+          "test_support": 353,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "DoS": {
+          "recall_mean": 18.51851851851852,
+          "recall_std": 16.95670978871522,
+          "train_support": 4043,
+          "test_support": 1008,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Exploits": {
+          "recall_mean": 34.211761550325214,
+          "recall_std": 31.8040749896391,
+          "train_support": 19765,
+          "test_support": 4971,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Fuzzers": {
+          "recall_mean": 32.64781491002571,
+          "recall_std": 30.272867299582,
+          "train_support": 15573,
+          "test_support": 3890,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Generic": {
+          "recall_mean": 28.435873890419344,
+          "recall_std": 26.126602103365435,
+          "train_support": 4481,
+          "test_support": 1089,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Reconnaissance": {
+          "recall_mean": 34.70721621982126,
+          "recall_std": 32.51916024411787,
+          "train_support": 9792,
+          "test_support": 2499,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Shellcode": {
+          "recall_mean": 34.35897435897436,
+          "recall_std": 31.331927451778707,
+          "train_support": 1105,
+          "test_support": 260,
+          "reliability_status": "RELIABLE (>=100)"
+        },
+        "Worms": {
+          "recall_mean": 27.27272727272727,
+          "recall_std": 26.762911716144988,
+          "train_support": 120,
+          "test_support": 33,
+          "reliability_status": "INSUFFICIENT FOR RELIABLE EVAL (<100)"
+        }
+      }
+    }
+  ]
+}
